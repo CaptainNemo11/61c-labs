@@ -22,3 +22,18 @@ main:
 
 factorial:
     # YOUR CODE HERE
+    li t0, 1  
+    beq a0, t0, finish  #n == 1 return 1
+    addi sp, sp, -8
+    sw ra, 0(sp)
+    sw a0, 4(sp)
+    addi a0, a0, -1
+    jal factorial
+    lw t0, 4(sp)
+    mul a0, t0, a0
+    lw ra, 0(sp)
+    addi sp, sp, 8
+finish:
+    ret
+
+
