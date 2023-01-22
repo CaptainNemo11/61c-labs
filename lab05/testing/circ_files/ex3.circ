@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project source="2.14.6" version="1.0">
-This file is intended to be loaded by Logisim-evolution (https://github.com/reds-heig/logisim-evolution).
-<lib desc="#Wiring" name="0">
+  This file is intended to be loaded by Logisim-evolution (https://github.com/reds-heig/logisim-evolution).
+
+  <lib desc="#Wiring" name="0">
     <tool name="Splitter">
       <a name="fanout" val="4"/>
       <a name="incoming" val="4"/>
@@ -116,14 +117,14 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="labelloc" val="south"/>
     </comp>
     <comp loc="(430,170)" name="FSMLogic"/>
-    <comp lib="4" loc="(380,250)" name="Register">
-      <a name="width" val="2"/>
-    </comp>
     <comp lib="0" loc="(490,170)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="label" val="Out1"/>
       <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="4" loc="(380,250)" name="Register">
+      <a name="width" val="2"/>
     </comp>
   </circuit>
   <circuit name="FSMLogic">
@@ -236,10 +237,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <comp lib="1" loc="(810,130)" name="AND Gate">
       <a name="size" val="30"/>
     </comp>
-    <comp lib="0" loc="(720,590)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="Current_State_1"/>
-    </comp>
     <comp lib="0" loc="(970,510)" name="Splitter">
       <a name="facing" val="west"/>
       <a name="appear" val="center"/>
@@ -247,10 +244,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <comp lib="0" loc="(720,560)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="Currrent_State_0"/>
-    </comp>
-    <comp lib="0" loc="(720,590)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="Current_State_1"/>
     </comp>
     <comp lib="0" loc="(980,510)" name="Pin">
       <a name="facing" val="west"/>
@@ -277,6 +270,14 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="facing" val="east"/>
       <a name="label" val="Input_Bit"/>
     </comp>
+    <comp lib="0" loc="(720,590)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="Current_State_1"/>
+    </comp>
+    <comp lib="0" loc="(720,590)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="Current_State_1"/>
+    </comp>
   </circuit>
   <circuit name="StateBitOne">
     <a name="circuit" val="StateBitOne"/>
@@ -293,19 +294,23 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <circ-port height="10" pin="610,230" width="10" x="125" y="65"/>
       <circ-anchor facing="east" height="6" width="6" x="127" y="67"/>
     </appear>
+    <wire from="(390,230)" to="(610,230)"/>
+    <wire from="(320,210)" to="(340,210)"/>
+    <wire from="(320,250)" to="(340,250)"/>
     <wire from="(250,200)" to="(250,210)"/>
     <wire from="(250,240)" to="(250,250)"/>
     <wire from="(250,280)" to="(250,290)"/>
+    <wire from="(320,200)" to="(320,210)"/>
+    <wire from="(320,240)" to="(320,250)"/>
     <wire from="(230,200)" to="(250,200)"/>
     <wire from="(230,240)" to="(250,240)"/>
     <wire from="(230,280)" to="(250,280)"/>
     <wire from="(250,210)" to="(260,210)"/>
     <wire from="(250,250)" to="(260,250)"/>
     <wire from="(250,290)" to="(260,290)"/>
-    <wire from="(250,200)" to="(290,200)"/>
-    <wire from="(250,240)" to="(290,240)"/>
+    <wire from="(250,200)" to="(320,200)"/>
+    <wire from="(250,240)" to="(320,240)"/>
     <wire from="(250,280)" to="(290,280)"/>
-    <wire from="(600,230)" to="(610,230)"/>
     <comp lib="0" loc="(610,230)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
@@ -327,6 +332,7 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="label" val="State_Bit_1"/>
     </comp>
     <comp lib="1" loc="(290,250)" name="NOT Gate"/>
+    <comp lib="1" loc="(390,230)" name="OR Gate"/>
   </circuit>
   <circuit name="StateBitZero">
     <a name="circuit" val="StateBitZero"/>
@@ -343,19 +349,46 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <circ-port height="10" pin="610,230" width="10" x="125" y="65"/>
       <circ-anchor facing="east" height="6" width="6" x="127" y="67"/>
     </appear>
+    <wire from="(570,230)" to="(570,240)"/>
+    <wire from="(330,200)" to="(330,270)"/>
     <wire from="(250,240)" to="(250,250)"/>
     <wire from="(250,280)" to="(250,290)"/>
     <wire from="(250,200)" to="(250,210)"/>
+    <wire from="(330,200)" to="(380,200)"/>
+    <wire from="(250,240)" to="(300,240)"/>
+    <wire from="(340,290)" to="(340,300)"/>
+    <wire from="(360,280)" to="(360,290)"/>
+    <wire from="(370,270)" to="(370,280)"/>
+    <wire from="(570,230)" to="(610,230)"/>
+    <wire from="(420,200)" to="(420,220)"/>
+    <wire from="(310,210)" to="(310,290)"/>
+    <wire from="(420,260)" to="(420,290)"/>
+    <wire from="(320,250)" to="(320,280)"/>
+    <wire from="(250,280)" to="(290,280)"/>
+    <wire from="(320,280)" to="(360,280)"/>
+    <wire from="(340,300)" to="(380,300)"/>
+    <wire from="(330,270)" to="(370,270)"/>
+    <wire from="(420,220)" to="(450,220)"/>
+    <wire from="(420,260)" to="(450,260)"/>
+    <wire from="(550,240)" to="(570,240)"/>
+    <wire from="(290,250)" to="(320,250)"/>
+    <wire from="(310,290)" to="(340,290)"/>
+    <wire from="(290,290)" to="(310,290)"/>
+    <wire from="(360,290)" to="(380,290)"/>
+    <wire from="(500,240)" to="(520,240)"/>
     <wire from="(230,200)" to="(250,200)"/>
     <wire from="(230,240)" to="(250,240)"/>
     <wire from="(230,280)" to="(250,280)"/>
+    <wire from="(410,200)" to="(420,200)"/>
+    <wire from="(410,290)" to="(420,290)"/>
+    <wire from="(250,200)" to="(330,200)"/>
+    <wire from="(370,280)" to="(380,280)"/>
+    <wire from="(300,190)" to="(380,190)"/>
     <wire from="(250,210)" to="(260,210)"/>
     <wire from="(250,250)" to="(260,250)"/>
     <wire from="(250,290)" to="(260,290)"/>
-    <wire from="(250,240)" to="(290,240)"/>
-    <wire from="(250,280)" to="(290,280)"/>
-    <wire from="(250,200)" to="(290,200)"/>
-    <wire from="(600,230)" to="(610,230)"/>
+    <wire from="(300,190)" to="(300,240)"/>
+    <wire from="(310,210)" to="(380,210)"/>
     <comp lib="6" loc="(414,131)" name="Text">
       <a name="text" val="PUT CIRCUITRY HERE"/>
     </comp>
@@ -377,5 +410,15 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <comp lib="0" loc="(230,200)" name="Pin">
       <a name="label" val="Input"/>
     </comp>
+    <comp lib="1" loc="(410,200)" name="AND Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="3"/>
+    </comp>
+    <comp lib="1" loc="(410,290)" name="AND Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="3"/>
+    </comp>
+    <comp lib="1" loc="(500,240)" name="OR Gate"/>
+    <comp lib="1" loc="(550,240)" name="NOT Gate"/>
   </circuit>
 </project>
