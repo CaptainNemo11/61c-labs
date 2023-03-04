@@ -53,8 +53,21 @@ long long int sum_simd(unsigned int vals[NUM_ELEMS]) {
 	
 	for(unsigned int w = 0; w < OUTER_ITERATIONS; w++) {
 		/* YOUR CODE GOES HERE */
-
+        __m128i _result = _mm_setzero_si128();
+        int i = 0;
+        for (; i + 4 < NUM_ELEMS; i+=4){
+            __m128i _vector = _mm_loadu_si128((__m128i *) &vals[i]);
+            _vector = _mm_and_si128(_vector, _mm_cmpgt_epi32(_vector, _127));
+            _result = _mm_add_epi32(_result, _vector);
+        }
+        int result_4_array[4]={0};
+        _mm_storeu_si128((__m128i *)result_4_array, _result);
+        result += result_4_array[0]+result_4_array[1]+result_4_array[2]+result_4_array[3];
 		/* You'll need a tail case. */
+        for(; i <NUM_ELEMS; i++)
+            if (vals[i] >= 128)
+                result += vals[i];
+
 
 	}
 	clock_t end = clock();
@@ -69,6 +82,30 @@ long long int sum_simd_unrolled(unsigned int vals[NUM_ELEMS]) {
 	for(unsigned int w = 0; w < OUTER_ITERATIONS; w++) {
 		/* COPY AND PASTE YOUR sum_simd() HERE */
 		/* MODIFY IT BY UNROLLING IT */
+        __m128i _result = _mm_setzero_si128();
+        int i = 0;
+        for (; i + 16 < NUM_ELEMS; i+=16){
+            __m128i _vector1 = _mm_loadu_si128((__m128i *) &vals[i]);
+            _vector1 = _mm_and_si128(_vector1, _mm_cmpgt_epi32(_vector1, _127));
+            _result = _mm_add_epi32(_result, _vector1);
+            __m128i _vector2 = _mm_loadu_si128((__m128i *) &vals[i+4]);
+            _vector2 = _mm_and_si128(_vector2, _mm_cmpgt_epi32(_vector2, _127));
+            _result = _mm_add_epi32(_result, _vector2);
+            __m128i _vector3 = _mm_loadu_si128((__m128i *) &vals[i+8]);
+            _vector3 = _mm_and_si128(_vector3, _mm_cmpgt_epi32(_vector3, _127));
+            _result = _mm_add_epi32(_result, _vector3);
+            __m128i _vector4 = _mm_loadu_si128((__m128i *) &vals[i+12]);
+            _vector4 = _mm_and_si128(_vector4, _mm_cmpgt_epi32(_vector4, _127));
+            _result = _mm_add_epi32(_result, _vector4);
+        }
+        int result_4_array[4]={0};
+        _mm_storeu_si128((__m128i *)result_4_array, _result);
+        result += result_4_array[0]+result_4_array[1]+result_4_array[2]+result_4_array[3];
+		/* You'll need a tail case. */
+        for(; i <NUM_ELEMS; i++)
+            if (vals[i] >= 128)
+                result += vals[i];
+
 
 		/* You'll need 1 or maybe 2 tail cases here. */
 

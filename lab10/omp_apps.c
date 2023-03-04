@@ -22,13 +22,23 @@ double dotp_naive(double* x, double* y, int arr_size) {
 // EDIT THIS FUNCTION PART 1
 double dotp_manual_optimized(double* x, double* y, int arr_size) {
   double global_sum = 0.0;
-#pragma omp parallel
+  int i = 0;
+#pragma omp parallel 
   {
-#pragma omp for
-    for (int i = 0; i < arr_size; i++)
+#pragma omp for lastprivate(i)
+    for (i=0; i < arr_size - 4; i+=4)
+    {
 #pragma omp critical
+     {
       global_sum += x[i] * y[i];
+      global_sum += x[i+1] * y[i+1];
+      global_sum += x[i+2] * y[i+2];
+      global_sum += x[i+3] * y[i+3];
+     }
+    }
   }
+  for(; i<arr_size; i++)
+      global_sum +=x[i] * y[i];
   return global_sum;
 }
 
@@ -37,9 +47,8 @@ double dotp_reduction_optimized(double* x, double* y, int arr_size) {
   double global_sum = 0.0;
 #pragma omp parallel
   {
-#pragma omp for
+#pragma omp for reduction(+ : global_sum)
     for (int i = 0; i < arr_size; i++)
-#pragma omp critical
       global_sum += x[i] * y[i];
   }
   return global_sum;
@@ -52,13 +61,13 @@ char* compute_dotp(int arr_size) {
 
   double *x = gen_array(arr_size), *y = gen_array(arr_size);
   double serial_result = 0.0, result = 0.0;
-
   // calculate result serially
   for (int i = 0; i < arr_size; i++) {
     serial_result += x[i] * y[i];
   }
 
   int num_threads = omp_get_max_threads();
+
   for (int i = 1; i <= num_threads; i++) {
     omp_set_num_threads(i);
     start_time = omp_get_wtime();
@@ -73,7 +82,7 @@ char* compute_dotp(int arr_size) {
       return report_buf;
     }
   }
-
+  
   for (int i = 1; i <= num_threads; i++) {
     omp_set_num_threads(i);
     start_time = omp_get_wtime();
@@ -83,8 +92,7 @@ char* compute_dotp(int arr_size) {
     }
 
     run_time = omp_get_wtime() - start_time;
-    pos += sprintf(pos, "Reduction Optimized: %d thread(s) took %f seconds\n",
-                   i, run_time);
+    pos += sprintf(pos, "Reduction Optimized: %d thread(s) took %f seconds\n",i, run_time);
 
     // verify result is correct (within some threshold)
     if (fabs(serial_result - result) > 0.001) {

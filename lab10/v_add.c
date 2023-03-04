@@ -18,16 +18,24 @@ void v_add_naive(double* x, double* y, double* z) {
 void v_add_optimized_adjacent(double* x, double* y, double* z) {
      #pragma omp parallel
 	{
-		for(int i=0; i<ARRAY_SIZE; i++)
+        int n = omp_get_num_threads();
+        int id = omp_get_thread_num();
+		for(int i=id; i<ARRAY_SIZE; i+=n)
 			z[i] = x[i] + y[i];
 	}
 }
 
 // Edit this function (Method 2) 
 void v_add_optimized_chunks(double* x, double* y, double* z) {
-          #pragma omp parallel
+     #pragma omp parallel
 	{
-		for(int i=0; i<ARRAY_SIZE; i++)
+        int n = omp_get_num_threads();
+        int id = omp_get_thread_num();
+        int chunk_size = ARRAY_SIZE/n;
+        int start = id * chunk_size;
+		for(int i=start; i<start+chunk_size && i != n*chunk_size; i++)
+			z[i] = x[i] + y[i];
+        for(int i=n*chunk_size; i<ARRAY_SIZE; i++)
 			z[i] = x[i] + y[i];
 	}
 }
@@ -63,7 +71,6 @@ int main() {
 	double start_time, run_time;
 	int num_threads = omp_get_max_threads();	
 
-
 	for(int i=1; i<=num_threads; i++) {
 		omp_set_num_threads(i);		
 	  start_time = omp_get_wtime();
@@ -76,7 +83,6 @@ int main() {
     }
     printf("Optimized adjacent: %d thread(s) took %f seconds\n",i,run_time);
   }
-
 
 	for(int i=1; i<=num_threads; i++) {
 		omp_set_num_threads(i);		
